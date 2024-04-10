@@ -3,6 +3,20 @@ const db = require('./db');
 
 const router = express.Router();
 
+router.use(express.json()); // Middleware para analizar solicitudes JSON
+
+// Ruta para obtener todos los datos
+router.get('/datos', (req, res) => {
+  db.query('SELECT * FROM datos', (err, rows) => {
+    if (err) {
+      console.error('Error al obtener datos:', err);
+      res.status(500).json({ error: 'Error interno del servidor' });
+      return;
+    }
+    res.json(rows);
+  });
+});
+
 // Ruta para obtener todos los usuarios
 router.get('/usuarios', (req, res) => {
   db.query('SELECT * FROM tb_usuarios', (err, rows) => {
@@ -62,6 +76,23 @@ router.delete('/usuarios/:id', (req, res) => {
       return;
     }
     res.json({ message: 'Usuario eliminado correctamente' });
+  });
+});
+
+// Ruta para obtener el dato por su ID
+router.get('/datos/:id', (req, res) => {
+  const userId = req.params.id;
+  db.query('SELECT * FROM datos WHERE id = ?', [userId], (err, rows) => {
+    if (err) {
+      console.error('Error al obtener dato:', err);
+      res.status(500).json({ error: 'Error interno del servidor' });
+      return;
+    }
+    if (rows.length === 0) {
+      res.status(404).json({ error: 'Dato no encontrado' });
+      return;
+    }
+    res.json(rows[0]);
   });
 });
 
