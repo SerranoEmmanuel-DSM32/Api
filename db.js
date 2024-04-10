@@ -2,10 +2,10 @@ const mysql = require('mysql');
 
 // Configuración de la conexión a la base de datos
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'agra'
+  host: 'srv1352.hstgr.io',
+  user: 'u691475477_agra',
+  password: 'LEG7101qw%',
+  database: 'u691475477_techsystem'
 });
 
 // Conectar a la base de datos
